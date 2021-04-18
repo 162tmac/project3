@@ -4,7 +4,7 @@ if os.path.exists('env.py'):
     import env
 
 MONGO_URI = os.environ.get('MONGO_URI')
-DATABASE = 'sample_mflix'
+DATABASE = 'film_flocks'
 COLLECTION = 'movies'
 
 
