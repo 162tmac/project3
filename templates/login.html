@@ -4,7 +4,7 @@
   <div class="card col-4 offset-4 my-4">
     <div class="card-body">
       <h5 class="card-title mb-3">Login</h5>
-      <form class="card-text">
+      <form class="card-text" method=POST action="{{ url_for('login') }}">
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" class="form-control" id="email" placeholder="Enter email"/>
