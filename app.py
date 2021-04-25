@@ -19,8 +19,6 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def index():
-    # if 'username' in session:
-    #     return 'You are logged in as' + session['username']
     return render_template("index.html")
 
 
@@ -35,6 +33,7 @@ def login():
             if check_password_hash(existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("email")
                 flash("Welcome, {}".format(existing_user["first_name"]))
+                return redirect(url_for("index", email=session["user"]))
             else:
                 flash("Incorrect Email and/or Password")
                 return redirect(url_for("login"))
@@ -71,6 +70,13 @@ def register():
         session["user"] = request.form.get("email")
         flash("Registration successful!")
     return render_template("register.html")
+
+
+@app.route("/logout")
+def logout():
+    flash("You have been logged out")
+    session.pop("user")
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":

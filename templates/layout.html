@@ -24,12 +24,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">My Collections</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Create a Collection</a>
-            </li>
+            {% if session.user %}
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">My Collections</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Create a Collection</a>
+              </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="#">Discover Collections</a>
             </li>
@@ -38,15 +40,19 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Logout</a>
-            </li>
+            {% if session.user %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+              </li>
+            {% endif %}
+
           </ul>
         </div>
       </div>
@@ -55,21 +61,29 @@
     <section>
       {# flash messages #}
       {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-light" role="alert">
-              <h4>
-                {{ message }}
-              </h4>
-            </div>
-          {% endfor %}
-        {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-light" role="alert">
+            <h4>
+              {{ message }}
+            </h4>
+          </div>
+        {% endfor %}
+      {% endif %}
       {% endwith %}
     </section>
 
-    <main class="container">
+    <main class="container min-vh-100 my-4">
       {% block body %}{% endblock %}
     </main>
+
+    <footer class="page-footer font-small bg-dark">
+      <div class="footer-copyright text-center py-3">
+        <i class="fab fa-github"></i>
+        <a href="https://www.github.com/162tmac">
+          162tmac</a>
+      </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
